@@ -1,13 +1,12 @@
-using osu_database_reader.Components.Beatmaps;
 using OsuPrune.Beatmaps;
 using static OsuPrune.Beatmaps.CommonMethods;
 using static OsuPrune.Common;
 using static OsuPrune.WebUtils.DownloadUtils;
 
-namespace Osu_UnitTest
+namespace OsuPrune_UnitTest.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class BeatmapSetTest
     {
         readonly SortedSets MapStorage = new();
 
@@ -88,25 +87,14 @@ namespace Osu_UnitTest
             Assert.AreEqual(OsuFile.Beatmaps.Count, total);
         }
 
+        [TestCategory("DataCheck")]
         [TestMethod]
-        public void TestSets()
+        public void TestSetsToString()
         {
-            foreach (BeatmapSet set in MapStorage.PlayedSets)
+            foreach (BeatmapSet set in MapStorage.BeatmapSets)
             {
                 Console.WriteLine(set.ToString());
             }
-        }
-
-        [TestCategory("Web Interactions")]
-        [TestMethod]
-        public async Task TestDownloadFromURL()
-        {
-            BeatmapSet set = MapStorage.Mania[5];
-            string url = GetDownloadURL(set);
-            string path = $@"{OSU_DOWNLOAD_FILE_PATH}\{set.FolderName}.osz";
-            // Console.WriteLine($"Starting download of {url}\n to {path}");
-            await Download(url, path);
-            Console.WriteLine("Done");
         }
     }
 }
